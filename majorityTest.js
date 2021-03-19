@@ -15,29 +15,29 @@ Utiliser readline-sync pour l'interaction avec l'utilisateur
 const chalk = require("chalk");
 const readlineSync = require("readline-sync");
 
-const userName = readlineSync.question("May I have your family name?");
+const userName = readlineSync.question("Hello, may I have your family name?");
 const userFirstName = readlineSync.question("May I have your firstname?");
 const userAge = readlineSync.question("What is your age?");
 
 if (userAge < 18) {
-  console.log(chalk.red(`Sorry ${userFirstName} ${userName} you are minor, so you can not vote`));
+  console.log(chalk.red(`Sorry ${userFirstName} ${userName} but you are minor and you can not vote.`));
 } else {
-  console.log(chalk.green(`${userFirstName} ${userName} you are major you can vote`));
+  console.log(chalk.green(`${userFirstName} ${userName} you are major and you can vote.`));
 }
 
-// node majorityTest.js
-
 /*
+node majorityTest.js
+
 OUTPUT exemple 1 :
-May I have your name? : Mémain-Yé
+Hello, may I have your family name? Mémain-Yé
 May I have your firstname? Sylvie
-What is your age? 57
-Sylvie Mémain-Yé you are major you can vote (en couleur verte)
+What is your age? 12
+Sorry Sylvie Mémain-Yé but you are minor and you can not vote. (en couleur rouge)
 *
 /*
 OUTPUT exemple 2 :
-May I have your name? Mémain-Yé
+Hello, may I have your family name? Mémain-Yé
 May I have your firstname? Sylvie
-What is your age? 17
-Sorry Sylvie Mémain-Yé you are minor you can not vote (en couleur rouge)
+What is your age? 57
+Sylvie Mémain-Yé you are major and you can vote. (en couleur verte)
 */
