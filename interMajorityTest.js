@@ -22,6 +22,12 @@ const readlineSync = require("readline-sync");
 const process = require("process");
 
 // Vérifier qu'il n'y a qu'un seul argument passé au programme
+
+if (process.argv.length !== 3) {
+  console.log("usage: node interMajorityTest.js majority");
+  process.exit(1); // exit the program with code status 1
+}
+
 if (process.argv.length !== 3) {
   console.log("usage: node interMajorityTest.js age");
   process.exit(1); // exit the program with code status 1
