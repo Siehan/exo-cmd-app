@@ -19,35 +19,74 @@ Utiliser readline-sync pour l'interaction avec l'utilisateur.
 
 const chalk = require("chalk");
 const readlineSync = require("readline-sync");
+const process = require("process");
 
-const America = 21;
-const France = 18;
-
-const userName = readlineSync.question("Hello, may I have your family name?");
-const userFirstName = readlineSync.question("May I have your firstname?");
-const userCountry = readlineSync.question(`Do you live in France or in America?`);
-const userAge = readlineSync.question("What is your age?");
-
-if (userAge < America || userAge < France) {
-  console.log(chalk.red(`Sorry ${userFirstName} ${userName} but you are minor and you can not vote.`));
-} else {
-  console.log(chalk.green(`${userFirstName} ${userName} you are major and you can vote.`));
+// Vérifier qu'il n'y a qu'un seul argument passé au programme
+if (process.argv.length !== 3) {
+  console.log("usage: node interMajorityTest.js age");
+  process.exit(1); // exit the program with code status 1
 }
 
-/* node interMajorityTest.js
-OUTPUT :
-Hello, may I have your family name? Mémain-Yé
-May I have your firstname? Sylvie
-Do you live in France or in America? America
-What is your age? 17
-Sorry Sylvie Mémain-Yé but you are minor and you can not vote (en couleur rouge)
-*/
+// Vérifier que l'argument passé au programme peut être converti en nombre
+if (isNaN(process.argv[2])) {
+  console.log(`Error: ${process.argv[2]} is not a number.`);
+  process.exit(1);
+}
 
-/* node interMajorityTest.js
+while (true) {
+  const userFirstName = readlineSync.question("Hello, may I have your firstname? : ");
+  const userName = readlineSync.question("And your family name? : ");
+  const userMajority = readlineSync.question("What is the age of majority in your country : ");
+  const userAge = readlineSync.question("What is your age? : ");
+
+  const majority = Number(userMajority);
+  const age = Number(userAge);
+
+  //JE N'AI PAS REUSSI A FAIRE FONCTIONNER LA VERIFICATION DU NUMBER DE USERMAJORITY
+  if (isNaN(userMajority)) {
+    console.log(chalk.blue(`Sorry ${userFirstName}: "${userMajority}" is not a number, do it again!`));
+    process.exit(1);
+  }
+
+  if (isNaN(userAge)) {
+    console.log(chalk.blue(`Sorry ${userFirstName}: "${userAge}" is not a number, do it again!`));
+    process.exit(1);
+  }
+
+  if (age < majority) {
+    console.log(chalk.red(`Sorry ${userFirstName} ${userName} but you are minor and you can not vote.`));
+  } else {
+    console.log(chalk.green(`${userFirstName} ${userName} you are major and you can vote.`));
+  }
+}
+
+/*
 OUTPUT :
-Hello, may I have your family name? Mémain-Yé
-May I have your firstname? Sylvie
-Do you live in France or in America? America
-What is your age? 22
-Sylvie Mémain-Yé you are major and you can vote. (en couleur verte)
+
+➜  exo-cmd-app git:(main) ✗ node interMajorityTest.js 21
+Hello, may I have your firstname? : Sylvie
+And your family name? : Mémain-Yé
+What is the age of majority in your country : 18
+What is your age? : 57
+Sylvie Mémain-Yé you are major and you can vote.(en vert)
+
+Hello, may I have your firstname? : Sylvie
+And your family name? : Mémain-Yé
+What is the age of majority in your country : 18
+What is your age? : 17
+Sorry Sylvie Mémain-Yé but you are minor and you can not vote.(en rouge)
+
+Hello, may I have your firstname? : Sylvie
+And your family name? : Mémain-Yé
+What is the age of majority in your country : 21
+What is your age? : 19
+Sorry Sylvie Mémain-Yé but you are minor and you can not vote.(en rouge)
+
+➜  exo-cmd-app git:(main) ✗ node interMajorityTest.js 21
+Hello, may I have your firstname? : Sylvie
+And your family name? : Mémain-Yé
+What is the age of majority in your country : 18
+What is your age? : dix
+Sorry Sylvie: "dix" is not a number, do it again! (en bleu)
+➜  exo-cmd-app git:(main) ✗
 */
